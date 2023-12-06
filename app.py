@@ -16,24 +16,24 @@ dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit')
 CREDENTIALS = toml.load(dotenv_path)
 
 SOURCES_DICT = {
-  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
-    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
+  f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
+    "link": f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWSAccessKeyId={CREDENTIALS['AWS']['AWSAccessKeyId']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
     "file_name": "Internal Audit LMO June 2023.pptx"
   },
-  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
-    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=wf6uQLxEt1L9d%2F9nJnWwtrsttBs%3D&Expires=1702482582",
+  f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
+    "link": f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?AWSAccessKeyId={CREDENTIALS['AWS']['AWSAccessKeyId']}&Signature=wf6uQLxEt1L9d%2F9nJnWwtrsttBs%3D&Expires=1702482582",
     "file_name": "LMO-FOCUS-Presentation_Oct-2023.pptx"
     },
-  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
-    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx",
+  f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
+    "link": f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx",
     "file_name": "Risk & Insurance LMO 2023.pptx"
   },
-  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS+LMO_2023_+.pptx": {
-    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS%20LMO_2023_%20.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=tld2ByoZViqZgk%2BqVOF%2B%2F1pzE6g%3D&Expires=1702482647",
+  f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS+LMO_2023_+.pptx": {
+    "link": f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS%20LMO_2023_%20.pptx?AWSAccessKeyId={CREDENTIALS['AWS']['AWSAccessKeyId']}&Signature=tld2ByoZViqZgk%2BqVOF%2B%2F1pzE6g%3D&Expires=1702482647",
     "file_name": "Payroll_HRIS LMO_2023_ .pptx"
   },
-  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx": {
-    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=uDNd9Eyq2%2BInBdpJQvXhY8bbPbc%3D&Expires=1702484661",
+  f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx": {
+    "link": f"https://{CREDENTIALS['AWS']['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx?AWSAccessKeyId={CREDENTIALS['AWS']['AWSAccessKeyId']}&Signature=uDNd9Eyq2%2BInBdpJQvXhY8bbPbc%3D&Expires=1702484661",
     "file_name": "Procurement LMO 2023 Rev A JRM.pptx"
   }
 }
@@ -50,7 +50,6 @@ else:
 
 st.session_state['llm_app'] = bedrock_claudev2
 st.session_state['llm_chain'] = bedrock_claudev2.build_chain()
-
 
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
@@ -103,8 +102,6 @@ def write_top_bar():
     with col1:
         st.image(AI_ICON, use_column_width='always')
     with col2:
-        selected_provider = sys.argv[1]
-        provider = selected_provider.capitalize()
         header = f"Hi, it's your onboarding assistant!"
         st.write(f"<h2 class='main-header'>{header}</h2>", unsafe_allow_html=True)
     with col3:

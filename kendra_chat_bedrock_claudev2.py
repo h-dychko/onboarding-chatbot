@@ -10,7 +10,10 @@ from langchain.llms import Bedrock
 
 import sys
 import os
+import toml
 
+dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
+CREDENTIALS = toml.load(dotenv_path)
 
 class bcolors:
     HEADER = '\033[95m'
@@ -26,8 +29,8 @@ class bcolors:
 MAX_HISTORY_LENGTH = 5
 
 def build_chain():
-  region = CREDENTIALS["AWS_REGION"]
-  kendra_index_id = CREDENTIALS["KENDRA_INDEX_ID"]
+  region = CREDENTIALS["AWS"]["AWS_REGION"]
+  kendra_index_id = CREDENTIALS["AWS"]["KENDRA_INDEX_ID"]
 
   session = boto3.Session(region_name = region)
   boto3_bedrock = session.client(service_name="bedrock-runtime")
@@ -54,6 +57,7 @@ def build_chain():
     In case the knowledge block doesn't contain an answer to the user's query, write, "I'm sorry, but I couldn't extract the answer from the knowledge base. 
     The most relevant information I have is <knowledge></knowledge>", 
     where instead of <knowledge></knowledge> put the information from the <knowledge></knowledge> block.
+    If there is no information in the knowledge blovk, you need to write the sentence: "I'm sorry, but I couldn't extract the answer from the knowledge base".
 
     You are forbidden to use any additional information except from the knowledge block.
     You are forbidden to rephrase the same information in one answer for more or equal one time. 
