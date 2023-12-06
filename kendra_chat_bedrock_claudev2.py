@@ -64,7 +64,7 @@ def build_chain():
       model_id="anthropic.claude-v2:1"
   )
 
-  retriever = AmazonKendraRetriever(index_id=kendra_index_id,top_k=5,region_name=region)
+  retriever = AmazonKendraRetriever(index_id=kendra_index_id,top_k=5,region_name=region, aws_access_key_id = access_key_id, aws_secret_access_key = secret_access_key)
 
   prompt_template = """
   Human: You will be acting as an onboarding assistant for a newcomer location manager.
