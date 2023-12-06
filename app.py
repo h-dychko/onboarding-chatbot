@@ -15,6 +15,7 @@ MAX_HISTORY_LENGTH = 5
 
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
 load_dotenv(dotenv_path)
+print(os.environ)
 
 SOURCES_DICT = {
   f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
