@@ -3,3 +3,4 @@ boto3>=1.28.27
 openai
 anthropic
 streamlit
+python-dotenv==1.0.0
