@@ -6,3 +6,4 @@ streamlit
 python-dotenv
 toml
 st-files-connection
+s3fs
