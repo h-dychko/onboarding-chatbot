@@ -38,10 +38,19 @@ MAX_HISTORY_LENGTH = 5
 def build_chain():
   region = os.environ["AWS_REGION"]
   kendra_index_id = os.environ["KENDRA_INDEX_ID"]
+  access_key_id = os.environ["ACCESS_ID"]
+  secret_access_key = os.environ["ACCESS_KEY"]
 
   session = boto3.Session(region_name = region)
-  boto3_bedrock = session.client(service_name="bedrock-runtime")
+  boto3_bedrock = session.client(
+    service_name = "bedrock-runtime",  
+    aws_access_key_id = access_key_id,
+    aws_secret_access_key = secret_access_key
+  )
 
+
+
+         
   llm = Bedrock(
       client=boto3_bedrock,
       region_name = region,
