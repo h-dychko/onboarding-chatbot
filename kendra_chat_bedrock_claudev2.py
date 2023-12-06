@@ -43,7 +43,11 @@ def build_chain():
   access_key_id = os.environ["ACCESS_ID"]
   secret_access_key = os.environ["ACCESS_KEY"]
 
-  session = boto3.Session(region_name = region)
+  session = boto3.Session(
+      region_name = region,
+      aws_access_key_id = access_key_id,
+      aws_secret_access_key = secret_access_key
+  )
   boto3_bedrock = session.client(
     service_name = "bedrock-runtime",  
     aws_access_key_id = access_key_id,
