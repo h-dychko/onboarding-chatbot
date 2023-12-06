@@ -5,8 +5,7 @@ import os
 import re
 
 import kendra_chat_bedrock_claudev2 as bedrock_claudev2
-import kendra_chat as llmchat
-from dotenv import load_dotenv
+import toml
 
 
 USER_ICON = "images/user-icon.png"
@@ -14,28 +13,27 @@ AI_ICON = "images/ai-icon.jpg"
 MAX_HISTORY_LENGTH = 5
 
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
-load_dotenv(dotenv_path)
-print(os.environ)
+CREDENTIALS = toml.load(dotenv_path)
 
 SOURCES_DICT = {
-  f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
-    "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWSAccessKeyId={os.environ['AWSAccessKeyId']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
+  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
+    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
     "file_name": "Internal Audit LMO June 2023.pptx"
   },
-  f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
-    "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?AWSAccessKeyId={os.environ['AWSAccessKeyId']}&Signature=wf6uQLxEt1L9d%2F9nJnWwtrsttBs%3D&Expires=1702482582",
+  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
+    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=wf6uQLxEt1L9d%2F9nJnWwtrsttBs%3D&Expires=1702482582",
     "file_name": "LMO-FOCUS-Presentation_Oct-2023.pptx"
     },
-  f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
-    "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx",
+  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
+    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx",
     "file_name": "Risk & Insurance LMO 2023.pptx"
   },
-  f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS+LMO_2023_+.pptx": {
-    "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS%20LMO_2023_%20.pptx?AWSAccessKeyId={os.environ['AWSAccessKeyId']}&Signature=tld2ByoZViqZgk%2BqVOF%2B%2F1pzE6g%3D&Expires=1702482647",
+  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS+LMO_2023_+.pptx": {
+    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS%20LMO_2023_%20.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=tld2ByoZViqZgk%2BqVOF%2B%2F1pzE6g%3D&Expires=1702482647",
     "file_name": "Payroll_HRIS LMO_2023_ .pptx"
   },
-  f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx": {
-    "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx?AWSAccessKeyId={os.environ['AWSAccessKeyId']}&Signature=uDNd9Eyq2%2BInBdpJQvXhY8bbPbc%3D&Expires=1702484661",
+  f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx": {
+    "link": f"https://{CREDENTIALS['S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx?AWSAccessKeyId={CREDENTIALS['AWSAccessKeyId']}&Signature=uDNd9Eyq2%2BInBdpJQvXhY8bbPbc%3D&Expires=1702484661",
     "file_name": "Procurement LMO 2023 Rev A JRM.pptx"
   }
 }

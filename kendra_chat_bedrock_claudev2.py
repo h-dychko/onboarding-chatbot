@@ -26,8 +26,8 @@ class bcolors:
 MAX_HISTORY_LENGTH = 5
 
 def build_chain():
-  region = os.environ["AWS_REGION"]
-  kendra_index_id = os.environ["KENDRA_INDEX_ID"]
+  region = CREDENTIALS["AWS_REGION"]
+  kendra_index_id = CREDENTIALS["KENDRA_INDEX_ID"]
 
   session = boto3.Session(region_name = region)
   boto3_bedrock = session.client(service_name="bedrock-runtime")
