@@ -10,6 +10,7 @@ from langchain.llms import Bedrock
 
 import sys
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
