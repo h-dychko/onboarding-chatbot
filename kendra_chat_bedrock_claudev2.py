@@ -21,6 +21,8 @@ if os.environ.get("AWS_REGION") is None:
     os.environ["KENDRA_INDEX_ID"] = st.secrets["AWS"]["KENDRA_INDEX_ID"]
     os.environ["S3_BUCKET"] = st.secrets["AWS"]["S3_BUCKET"]
     os.environ["AWSAccessKeyId"] = st.secrets["AWS"]["AWSAccessKeyId"]
+    os.environ["ACCESS_ID"] = st.secrets["AWS"]["ACCESS_ID"]
+    os.environ["ACCESS_KEY"] = st.secrets["AWS"]["ACCESS_KEY"]
 
 class bcolors:
     HEADER = '\033[95m'
