@@ -138,34 +138,3 @@ def build_chain():
 
 def run_chain(chain, prompt: str, history=[]):
   return chain({"question": prompt, "chat_history": history})
-
-
-# if __name__ == "__main__":
-#   chat_history = []
-#   qa = build_chain()
-#   print(bcolors.OKBLUE + "Hello! How can I help you?" + bcolors.ENDC)
-#   print(bcolors.OKCYAN + "Ask a question, start a New search: or CTRL-D to exit." + bcolors.ENDC)
-#   print(">", end=" ", flush=True)
-#   for query in sys.stdin:
-#     if (query.strip().lower().startswith("new search:")):
-#       query = query.strip().lower().replace("new search:","")
-#       chat_history = []
-#     elif (len(chat_history) == MAX_HISTORY_LENGTH):
-#       chat_history.pop(0)
-#     result = run_chain(qa, query, chat_history)
-#     import re
-    
-#     result["answer"] = re.sub("<knowledge>", result["answer"], "")
-#     result["answer"] = re.sub("</knowledge>", result["answer"], "")
-
-#     chat_history.append((query, result["answer"]))
-#     print(bcolors.OKGREEN + result['answer'] + bcolors.ENDC)
-#     if 'source_documents' in result:
-#       print(bcolors.OKGREEN + 'Sources:')
-#       for d in result['source_documents']:
-#         print(d.metadata['source'])
-#     print(bcolors.ENDC)
-#     print(bcolors.OKCYAN + "Ask a question, start a New search: or CTRL-D to exit." + bcolors.ENDC)
-#     print(">", end=" ", flush=True)
-#   print(bcolors.OKBLUE + "Bye" + bcolors.ENDC)
-  
