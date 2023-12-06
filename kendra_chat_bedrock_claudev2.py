@@ -10,10 +10,16 @@ from langchain.llms import Bedrock
 
 import sys
 import os
-import toml
+from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
-CREDENTIALS = toml.load(dotenv_path)
+load_dotenv(dotenv_path)
+
+if os.environ.get("AWS_REGION") is None:
+    os.environ["AWS_REGION"] = st.secrets["AWS"]["AWS_REGION"]
+    os.environ["KENDRA_INDEX_ID"] = st.secrets["AWS"]["KENDRA_INDEX_ID"]
+    os.environ["S3_BUCKET"] = st.secrets["AWS"]["S3_BUCKET"]
+    os.environ["AWSAccessKeyId"] = st.secrets["AWS"]["AWSAccessKeyId"]
 
 class bcolors:
     HEADER = '\033[95m'
@@ -29,8 +35,8 @@ class bcolors:
 MAX_HISTORY_LENGTH = 5
 
 def build_chain():
-  region = CREDENTIALS["AWS"]["AWS_REGION"]
-  kendra_index_id = CREDENTIALS["AWS"]["KENDRA_INDEX_ID"]
+  region = os.environ["AWS_REGION"]
+  kendra_index_id = os.environ["KENDRA_INDEX_ID"]
 
   session = boto3.Session(region_name = region)
   boto3_bedrock = session.client(service_name="bedrock-runtime")
