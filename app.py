@@ -30,7 +30,7 @@ conn = st.experimental_connection('s3', type=FilesConnection)
 st.write(conn)
 
 conn = st.experimental_connection("s3", type=FilesConnection)
-df = conn.read(f"https://test-kendra-2.s3.amazonaws.com/requirements.txt", input_format='txt')
+df = conn.read(f"https://test-kendra-2.s3.amazonaws.com/requirements.txt", input_format='text')
 st.dataframe(df)
 
 # SOURCES_DICT = {
