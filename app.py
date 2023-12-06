@@ -29,6 +29,10 @@ if os.environ.get("AWS_REGION") is None:
 conn = st.experimental_connection('s3', type=FilesConnection)
 st.write(conn)
 
+conn = st.experimental_connection("s3", type=FilesConnection)
+df = conn.read(f"https://test-kendra-2.s3.amazonaws.com/requirements.txt", input_format='txt')
+st.dataframe(df)
+
 # SOURCES_DICT = {
 #   f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
 #     "link": f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWSAccessKeyId={os.environ['AWSAccessKeyId']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
