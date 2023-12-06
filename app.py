@@ -50,15 +50,9 @@ else:
     st.session_state['user_id'] = user_id
 
 
-if 'llm_chain' not in st.session_state:
-    if (len(sys.argv) > 1):
-        if (sys.argv[1] == 'bedrock_claudev2'):
-            st.session_state['llm_app'] = bedrock_claudev2
-            st.session_state['llm_chain'] = bedrock_claudev2.build_chain()
-        else:
-            raise Exception("Unsupported LLM: ", sys.argv[1])
-    else:
-        raise Exception("Usage: streamlit run app.py <bedrock_claudev2>")
+st.session_state['llm_app'] = bedrock_claudev2
+st.session_state['llm_chain'] = bedrock_claudev2.build_chain()
+
 
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
