@@ -98,9 +98,8 @@ def build_chain():
   </knowledge>
 
     Based on the above knowledge, provide a short informative answer for {question}. 
-    In case the knowledge block doesn't contain an answer to the user's query, write exactly 
-    "I'm sorry, but I couldn't extract the answer from the knowledge base. The most relevant information I have is <knowledge></knowledge>", 
-    where instead of knowledge put the information from the knowledge block.
+    In case the knowledge block doesn't contain an answer to the user's query, write, "I'm sorry, but I couldn't extract the answer from the knowledge base. 
+    Could you please clarify your query?".
     You are forbidden to use any additional information except from the knowledge block. 
     
     Do not repeat the question in your answer; do not rephrase the question block in your answer.
