@@ -1,0 +1,16 @@
+name: chat
+channels:
+  - https://conda.anaconda.org/conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - st-files-connection
+    - s3fs
+    - langchain>=0.0.219
+    - boto3<=1.33.1
+    - openai
+    - anthropic
+    - streamlit
+    - python-dotenv
+

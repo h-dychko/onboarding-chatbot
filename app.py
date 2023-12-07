@@ -8,6 +8,8 @@ import re
 import kendra_chat_bedrock_claudev2 as bedrock_claudev2
 import toml
 
+import boto3
+
 
 USER_ICON = "images/user-icon.png"
 AI_ICON = "images/ai-icon.jpg"
@@ -16,7 +18,6 @@ MAX_HISTORY_LENGTH = 5
 from dotenv import load_dotenv
 
 load_dotenv()
-print(os.environ)
 
 if os.environ.get("AWS_DEFAULT_REGION") is None:
     os.environ["AWS_DEFAULT_REGION"] = st.secrets["AWS"]["AWS_DEFAULT_REGION"]
@@ -30,26 +31,47 @@ df = conn.read(f"{os.environ['AWS_S3_BUCKET']}/test.txt", input_format='text')
 
 SOURCES_DICT = {
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx?AWS_ACCESS_KEY_ID={os.environ['AWS_ACCESS_KEY_ID']}&Signature=9H9obJLIlDN8h1A5loU35toqipY%3D&Expires=1702482499",
     "file_name": "Internal Audit LMO June 2023.pptx"
   },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.{os.environ['AWS_DEFAULT_REGION']}.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential={os.environ['AWS_ACCESS_KEY_ID']}%2F20231207%2F{os.environ['AWS_DEFAULT_REGION']}%2Fs3%2Faws4_request&X-Amz-Date=20231207T113537Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=b01a365e064dc0c8f3a959077807ac144fa4e3028adfb3acc2e31731dea19e5b",
-      "file_name": "LMO-FOCUS-Presentation_Oct-2023.pptx"
+    "file_name": "LMO-FOCUS-Presentation_Oct-2023.pptx"
     },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx",
     "file_name": "Risk & Insurance LMO 2023.pptx"
   },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS+LMO_2023_+.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Payroll_HRIS%20LMO_2023_%20.pptx?AWS_ACCESS_KEY_ID={os.environ['AWS_ACCESS_KEY_ID']}&Signature=tld2ByoZViqZgk%2BqVOF%2B%2F1pzE6g%3D&Expires=1702482647",
     "file_name": "Payroll_HRIS LMO_2023_ .pptx"
   },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Procurement%20LMO%202023%20Rev%20A%20JRM.pptx?AWS_ACCESS_KEY_ID={os.environ['AWS_ACCESS_KEY_ID']}&Signature=uDNd9Eyq2%2BInBdpJQvXhY8bbPbc%3D&Expires=1702484661",
     "file_name": "Procurement LMO 2023 Rev A JRM.pptx"
   }
 }
+
+
+def create_presigned_url(bucket_name, object_name, region, secret_access_key, access_key_id, expiration=3600):
+    """Generate a presigned URL to share an S3 object
+
+    :param bucket_name: string
+    :param object_name: string
+    :param expiration: Time in seconds for the presigned URL to remain valid
+    :return: Presigned URL as string. If error, returns None.
+    """
+    session = boto3.Session(
+        region_name = region,
+        aws_access_key_id = access_key_id,
+        aws_secret_access_key = secret_access_key
+    )
+    boto3_s3 = session.client(
+        service_name = "s3",  
+        aws_access_key_id = access_key_id,
+        aws_secret_access_key = secret_access_key
+    )
+    response = boto3_s3.generate_presigned_url(
+        'get_object',
+        Params={'Bucket': bucket_name, 'Key': object_name},
+        ExpiresIn=expiration
+    )
+    return response
 
 # Check if the user ID is already stored in the session state
 if 'user_id' in st.session_state:
@@ -195,7 +217,13 @@ def render_sources(sources):
     with col2:
         with st.expander("Sources"):
             for s in sources:
-                st.markdown(f"<a href='{SOURCES_DICT[s]['link']}'>{SOURCES_DICT[s]['file_name']}</a>", unsafe_allow_html=True)
+                url = create_presigned_url(
+                    os.environ['AWS_S3_BUCKET'], SOURCES_DICT[s]['file_name'], 
+                    region=os.environ['AWS_DEFAULT_REGION'], 
+                    secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], 
+                    access_key_id=os.environ['AWS_ACCESS_KEY_ID']
+                )
+                st.markdown(f"<a href='{url}'>{SOURCES_DICT[s]['file_name']}</a>", unsafe_allow_html=True)
 
     
 #Each answer will have context of the question asked in order to associate the provided feedback with the respective question

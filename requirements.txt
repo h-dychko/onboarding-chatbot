@@ -1,9 +1,8 @@
-langchain==0.0.306
-boto3>=1.28.27
+st-files-connection
+s3fs
+langchain>=0.0.219
+boto3<=1.33.1
 openai
 anthropic
 streamlit
 python-dotenv
-toml
-st-files-connection
-s3fs
