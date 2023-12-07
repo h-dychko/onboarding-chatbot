@@ -31,7 +31,6 @@ st.write(conn)
 
 conn = st.experimental_connection("s3", type=FilesConnection)
 df = conn.read(f"test-kendra-2/requirements.txt", input_format='text')
-st.dataframe(df)
 
 # SOURCES_DICT = {
 #   f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
