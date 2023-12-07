@@ -74,15 +74,13 @@ def build_chain():
 
     You'll receive a newcomer's question and a piece of text from a .pptx presentation to generate an answer to the user's query. 
 
-    Text from a .pptx presentation will be inside the block <knowledge></knowledge>.
+    Text from a .pptx presentation will be inside the <knowledge></knowledge> block.
 
     Firstly, you have to generate an answer to the question based on the input information in the block <knowledge></knowledge>.  
     Secondly, provide the exact truncated quotes with only relevant information for your answer.
 
     In case the knowledge block doesn't contain an answer to the user's query, write, "I'm sorry, but I couldn't extract the answer from the knowledge base. 
-    The most relevant information I have is <knowledge></knowledge>", 
-    where instead of <knowledge></knowledge> put the information from the <knowledge></knowledge> block.
-    If there is no information in the knowledge blovk, you need to write the sentence: "I'm sorry, but I couldn't extract the answer from the knowledge base".
+    Could you please clarify your query?".
 
     You are forbidden to use any additional information except from the knowledge block.
     You are forbidden to rephrase the same information in one answer for more or equal one time. 
