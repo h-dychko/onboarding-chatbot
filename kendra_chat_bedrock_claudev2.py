@@ -17,16 +17,15 @@ from st_files_connection import FilesConnection
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
 load_dotenv(dotenv_path)
 
-if os.environ.get("AWS_REGION") is None:
-    os.environ["AWS_REGION"] = st.secrets["AWS"]["AWS_REGION"]
-    os.environ["KENDRA_INDEX_ID"] = st.secrets["AWS"]["KENDRA_INDEX_ID"]
-    os.environ["S3_BUCKET"] = st.secrets["AWS"]["S3_BUCKET"]
-    os.environ["AWSAccessKeyId"] = st.secrets["AWS"]["AWSAccessKeyId"]
-    os.environ["ACCESS_ID"] = st.secrets["AWS"]["ACCESS_ID"]
-    os.environ["ACCESS_KEY"] = st.secrets["AWS"]["ACCESS_KEY"]
+if os.environ.get("AWS_DEFAULT_REGION") is None:
+    os.environ["AWS_DEFAULT_REGION"] = st.secrets["AWS"]["AWS_DEFAULT_REGION"]
+    os.environ["AWS_S3_BUCKET"] = st.secrets["AWS"]["AWS_S3_BUCKET"]
+    os.environ["AWS_ACCESS_KEY_ID"] = st.secrets["AWS"]["AWS_ACCESS_KEY_ID"]
+    os.environ["AWS_SECRET_ACCESS_KEY"] = st.secrets["AWS"]["AWS_SECRET_ACCESS_KEY"]
+    os.environ["AWS_KENDRA_INDEX_ID"] = st.secrets["AWS"]["AWS_KENDRA_INDEX_ID"]
 
 conn = st.connection('s3', type=FilesConnection)
-df = conn.read(f"test-kendra-2/test.txt", input_format='text')
+df = conn.read(f"{os.environ['AWS_S3_BUCKET']}/test.txt", input_format='text')
 
 class bcolors:
     HEADER = '\033[95m'
@@ -42,10 +41,10 @@ class bcolors:
 MAX_HISTORY_LENGTH = 5
 
 def build_chain():
-  region = os.environ["AWS_REGION"]
-  kendra_index_id = os.environ["KENDRA_INDEX_ID"]
-  access_key_id = os.environ["ACCESS_ID"]
-  secret_access_key = os.environ["ACCESS_KEY"]
+  region = os.environ["AWS_DEFAULT_REGION"]
+  kendra_index_id = os.environ["AWS_KENDRA_INDEX_ID"]
+  access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+  secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
 
   session = boto3.Session(
       region_name = region,
