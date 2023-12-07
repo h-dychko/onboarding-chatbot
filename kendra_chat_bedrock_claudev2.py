@@ -12,6 +12,7 @@ import sys
 import os
 import streamlit as st
 from dotenv import load_dotenv
+from st_files_connection import FilesConnection
 
 dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
 load_dotenv(dotenv_path)
@@ -23,6 +24,9 @@ if os.environ.get("AWS_REGION") is None:
     os.environ["AWSAccessKeyId"] = st.secrets["AWS"]["AWSAccessKeyId"]
     os.environ["ACCESS_ID"] = st.secrets["AWS"]["ACCESS_ID"]
     os.environ["ACCESS_KEY"] = st.secrets["AWS"]["ACCESS_KEY"]
+
+conn = st.connection('s3', type=FilesConnection)
+df = conn.read(f"test-kendra-2/test.txt", input_format='text')
 
 class bcolors:
     HEADER = '\033[95m'
