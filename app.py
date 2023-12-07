@@ -26,11 +26,8 @@ if os.environ.get("AWS_REGION") is None:
     os.environ["AWS_ACCESS_KEY_ID"] = st.secrets["AWS"]["AWS_ACCESS_KEY_ID"]
     os.environ["AWS_SECRET_ACCESS_KEY"] = st.secrets["AWS"]["AWS_SECRET_ACCESS_KEY"]
 
-conn = st.experimental_connection('s3', type=FilesConnection)
-st.write(conn)
-
-conn = st.experimental_connection("s3", type=FilesConnection)
-df = conn.read(f"test-kendra-2/requirements.txt", input_format='text')
+conn = st.connection('s3', type=FilesConnection)
+df = conn.read(f"test-kendra-2/test.txt", input_format='text')
 
 # SOURCES_DICT = {
 #   f"https://{os.environ['S3_BUCKET']}.s3.amazonaws.com/Internal%20Audit%20LMO%20June%202023.pptx": {
