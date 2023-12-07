@@ -19,12 +19,12 @@ dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit')
 load_dotenv(dotenv_path)
 
 if os.environ.get("AWS_REGION") is None:
-    os.environ["AWS_REGION"] = st.secrets["AWS"]["AWS_REGION"]
+    os.environ["AWS_DEFAULT_REGION"] = st.secrets["AWS"]["AWS_DEFAULT_REGION"]
     os.environ["KENDRA_INDEX_ID"] = st.secrets["AWS"]["KENDRA_INDEX_ID"]
     os.environ["S3_BUCKET"] = st.secrets["AWS"]["S3_BUCKET"]
     os.environ["AWSAccessKeyId"] = st.secrets["AWS"]["AWSAccessKeyId"]
-    os.environ["ACCESS_ID"] = st.secrets["AWS"]["ACCESS_ID"]
-    os.environ["ACCESS_KEY"] = st.secrets["AWS"]["ACCESS_KEY"]
+    os.environ["AWS_ACCESS_KEY_ID"] = st.secrets["AWS"]["AWS_ACCESS_KEY_ID"]
+    os.environ["AWS_SECRET_ACCESS_KEY"] = st.secrets["AWS"]["AWS_SECRET_ACCESS_KEY"]
 
 conn = st.experimental_connection('s3', type=FilesConnection)
 st.write(conn)
