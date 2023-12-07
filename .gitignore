@@ -1,5 +1,6 @@
 #secrets 
 .streamlit/
+.env
 
 *.egg-info/
 

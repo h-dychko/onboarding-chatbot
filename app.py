@@ -15,8 +15,8 @@ MAX_HISTORY_LENGTH = 5
 
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
-load_dotenv(dotenv_path)
+load_dotenv()
+print(os.environ)
 
 if os.environ.get("AWS_DEFAULT_REGION") is None:
     os.environ["AWS_DEFAULT_REGION"] = st.secrets["AWS"]["AWS_DEFAULT_REGION"]

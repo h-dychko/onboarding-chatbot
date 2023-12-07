@@ -14,8 +14,8 @@ import streamlit as st
 from dotenv import load_dotenv
 from st_files_connection import FilesConnection
 
-dotenv_path = os.path.join(os.path.join(os.path.dirname(__file__), '.streamlit'), "config.toml")
-load_dotenv(dotenv_path)
+
+load_dotenv()
 
 if os.environ.get("AWS_DEFAULT_REGION") is None:
     os.environ["AWS_DEFAULT_REGION"] = st.secrets["AWS"]["AWS_DEFAULT_REGION"]
