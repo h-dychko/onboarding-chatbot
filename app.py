@@ -34,7 +34,7 @@ SOURCES_DICT = {
     "file_name": "Internal Audit LMO June 2023.pptx"
   },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx": {
-    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.{os.environ['AWS_DEFAULT_REGION']}.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential={os.environ['AWS_ACCESS_KEY_ID']}%2F20231207%2F{os.environ['AWS_DEFAULT_REGION']}%2Fs3%2Faws4_request&X-Amz-Date=20231207T113537Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=b01a365e064dc0c8f3a959077807ac144fa4e3028adfb3acc2e31731dea19e5b"
+    "link": f"https://{os.environ['AWS_S3_BUCKET']}.s3.{os.environ['AWS_DEFAULT_REGION']}.amazonaws.com/LMO-FOCUS-Presentation_Oct-2023.pptx?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential={os.environ['AWS_ACCESS_KEY_ID']}%2F20231207%2F{os.environ['AWS_DEFAULT_REGION']}%2Fs3%2Faws4_request&X-Amz-Date=20231207T113537Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=b01a365e064dc0c8f3a959077807ac144fa4e3028adfb3acc2e31731dea19e5b",
       "file_name": "LMO-FOCUS-Presentation_Oct-2023.pptx"
     },
   f"https://{os.environ['AWS_S3_BUCKET']}.s3.amazonaws.com/Risk%20%26%20Insurance%20LMO%202023.pptx": {
