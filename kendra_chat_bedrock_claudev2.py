@@ -92,6 +92,7 @@ def build_chain():
     You are forbidden to include intro and summary/conclusion parts and anything except neat and short-spoken information in your answer. 
     You are forbidden to include synonyms of the phrase 'my answer' with meaning that it's your answer in your answer.
 
+ Assistant: Ok.
 
   Human: Here are a few pieces of knowledge in <knowledge> tags:
   <knowledge>
