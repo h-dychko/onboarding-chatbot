@@ -5,7 +5,7 @@ import sys
 import os
 import re
 
-import kendra_chat_bedrock_claudev2 as bedrock_claudev2
+# import kendra_chat_bedrock_claudev2 as bedrock_claudev2
 import toml
 
 
